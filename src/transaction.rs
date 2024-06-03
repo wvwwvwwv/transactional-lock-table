@@ -3,8 +3,7 @@
 // SPDX-License-Identifier: Apache-2.0
 
 use super::journal::Anchor as JournalAnchor;
-use super::snapshot::TransactionSnapshot;
-use super::{AwaitIO, Database, Error, Journal, PersistenceLayer, Sequencer, Snapshot};
+use super::{Accessor, Error, LockTable};
 use scc::ebr;
 use scc::Bag;
 use std::collections::hash_map;
@@ -19,16 +18,16 @@ use std::sync::Arc;
 use std::task::Waker;
 use std::task::{Context, Poll};
 
-/// [`Transaction`] is the atomic unit of work in a [`Database`].
+/// [`Transaction`] is the atomic unit of work in a [`LockTable`].
 ///
 /// A single strand of [`Journal`] constitutes a [`Transaction`], and an on-going transaction can
 /// be rewound to a certain instant by rolling back submitted [`Journal`] instances in reverse
 /// order.
 #[derive(Debug)]
-pub struct Transaction<'d, S: Sequencer, P: PersistenceLayer<S>> {
+pub struct Transaction<'l, S: Sequencer, P: PersistenceLayer<S>> {
     /// The transaction refers to the corresponding [`Database`] to persist pending changes at
     /// commit.
-    database: &'d Database<S, P>,
+    database: &'l Database<S, P>,
 
     /// The flush epoch value that ensures the durability of changes made in this transaction.
     durable_flush_epoch: AtomicU64,

@@ -2,7 +2,7 @@
 #
 # SPDX-License-Identifier: Apache-2.0
 
-name: SAP-transactional-storage-framework
+name: TLT
 
 on:
   push:

@@ -3,19 +3,19 @@
 # SPDX-License-Identifier: Apache-2.0
 
 [package]
-name = "sap-tsf"
-version = "0.2.0"
+name = "Transactional access controller"
+version = "0.1.0"
 authors = ["wvwwvwwv <wvwwvwwv@me.com>"]
 edition = "2021"
 readme = "README.md"
-repository = "https://github.com/SAP/transactional-storage-framework"
+repository = "https://github.com/wvwwvwwv/transactional-access-controller"
 license = "Apache-2.0"
 categories = ["asynchronous", "concurrency", "database-implementations"]
 keywords = ["async", "concurrent", "database"]
 
 [dependencies]
-libc = "0.2"
-scc = "1.9"
+scc = "2.1"
+sdd = "0.2"
 
 [dev-dependencies]
 criterion = { version = "0.5", features = ["async_futures"] }
@@ -25,13 +25,5 @@ static_assertions = "1.1"
 tokio = { version = "1.2", features = ["full"] }
 
 [[bench]]
-name = "access_controller"
-harness = false
-
-[[bench]]
-name = "monotonic_u64"
-harness = false
-
-[[bench]]
-name = "util"
+name = "lock_table"
 harness = false
